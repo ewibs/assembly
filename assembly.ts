@@ -64,7 +64,7 @@ export abstract class Assembly implements IAssembly {
       fs.writeFileSync(
         fullPath,
         format(`
-          import { IComponentMeta, ComponentBody } from "@rothert/spbp/assembly/models/component";
+          import { IComponentMeta, ComponentBody } from "@ewibs/assembly/models/component";
 
           export const meta: IComponentMeta = ${JSON.stringify(component.meta)}
 

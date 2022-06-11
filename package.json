@@ -1,6 +1,6 @@
 {
   "name": "@ewibs/assembly",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Assembly for the ewibs system",
   "main": "assembly.js",
   "type": "module",
@@ -15,19 +15,17 @@
   "author": "Simon Rothert <puresamari@gmail.com>",
   "license": "Apache-2.0",
   "devDependencies": {
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
     "@babel/parser": "^7.17.8",
     "@types/glob": "^7.2.0",
     "@types/glob-watcher": "^5.0.2",
     "@types/prettier": "^2.4.4",
     "@types/uuid": "^8.3.4",
-    "glob-watcher": "^5.0.5",
-    "nodemon": "^2.0.16",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^4.6.3"
-  },
-  "dependencies": {
     "babel": "^6.23.0",
     "glob": "^8.0.3",
+    "glob-watcher": "^5.0.5",
     "prettier": "^2.6.2",
     "rxjs": "^7.5.5",
     "ts-node": "^10.8.0",

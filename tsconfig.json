@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "downlevelIteration": true,
+    "declaration": true,
+    "allowJs": true,
+    "strict": true,
+    "baseUrl": ".",
+    "outDir": "./dist"
+  }
+}

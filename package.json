@@ -1,12 +1,16 @@
 {
   "name": "@ewibs/assembly",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "Assembly for the ewibs system",
-  "main": "dist/assembly.js",
+  "main": "assembly.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "tsc"
+    "prepublishOnly": "tsc && cp -r ./lib/* . && rm -rf ./lib",
+    "postpublish": "git clean -fd"
+  },
+  "repository": {
+    "url": "https://github.com/ewibs/assembly"
   },
   "author": "Simon Rothert <puresamari@gmail.com>",
   "license": "Apache-2.0",

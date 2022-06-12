@@ -1,6 +1,6 @@
 {
   "name": "@ewibs/assembly",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Assembly for the ewibs system",
   "main": "assembly.js",
   "type": "commonjs",

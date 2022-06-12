@@ -88,6 +88,7 @@ export abstract class Assembly implements IAssembly {
         `, { parser: 'babel', plugins: [parserBabel] })
       );
     });
+    fs.writeFileSync(this.assemblySettingsPath, JSON.stringify(this.settings), 'utf-8');
   }
 
   destroy() {

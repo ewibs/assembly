@@ -22,10 +22,10 @@ export interface IAssemblyData {
   readonly components: Map<string, IComponent>;
   mode: AssemblyMode;
   packagePath: string;
+  readonly settings: IAssemblySettings;
 }
 
 export interface IAssembly extends IAssemblyData {
   readonly package: IPackage;
-  readonly settings: IAssemblySettings;
   readonly absOutPath: string;
 }

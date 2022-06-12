@@ -1,14 +1,16 @@
 import { IComponent } from "./component";
 
 export interface IAssemblyDefinitions {
-  root: string;
-  dist: string;
 }
 
 export interface IPackage {
   version: string;
   description: string;
-  spbp: IAssemblyDefinitions;
+}
+
+export interface IAssemblySettings {
+  root: string;
+  dist: string;
 }
 
 export enum AssemblyMode { 
@@ -23,6 +25,7 @@ export interface IAssemblyData {
 }
 
 export interface IAssembly extends IAssemblyData {
-  readonly meta: IPackage;
+  readonly package: IPackage;
+  readonly settings: IAssemblySettings;
   readonly absOutPath: string;
 }

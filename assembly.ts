@@ -1,10 +1,10 @@
 import fs from 'fs';
 import { GlobSync, IGlobBase } from 'glob';
 import path from 'path';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, filter, first, lastValueFrom, map, Observable, Subject, take, takeUntil } from 'rxjs';
 import { Bundle } from './bundler';
 
-import { AssemblyMode, IAssembly, IAssemblyData, IPackage } from './models/assembly';
+import { AssemblyMode, IAssembly, IAssemblyData, IAssemblySettings, IPackage } from './models/assembly';
 import { IComponent } from './models/component';
 import globWatch from 'glob-watcher';
 import { format } from 'prettier';
@@ -15,29 +15,45 @@ export abstract class Assembly implements IAssembly {
 
   private oldData?: Map<string, IComponent>;
 
-  public readonly meta: IPackage;
+  public readonly package: IPackage;
+  public readonly settings: IAssemblySettings;
   private files?: IGlobBase;
   public components = new Map<string, IComponent>();
   public bundle?: Bundle;
 
+  public readonly packagePath: string;
   private readonly absBasePath: string;
   private readonly absRootPath: string;
   private readonly absGlobPath: string;
   public readonly absOutPath: string;
 
-  private readonly loadSubject = new Subject();
+  private readonly loadSubject = new BehaviorSubject<boolean>(false);
   private readonly watcher: fs.FSWatcher;
   public readonly $load: Observable<any> = this.loadSubject.asObservable();
 
   public mode = AssemblyMode.debug;
 
-  constructor(public readonly packagePath: string) {
-    this.meta = JSON.parse(fs.readFileSync(packagePath, 'utf-8'));
+  constructor(public readonly assemblySettingsPath: string) {
+    if (path.extname(assemblySettingsPath) !== '.ewibs') {
+      throw new Error("ewibs assemblies can only be initialized by .ewibs files");
+    }
+    if (!fs.existsSync(this.assemblySettingsPath)) {
+      throw new Error("ewibs assemblies settings file doesn't exist ");
+    }
+    
+    this.packagePath = path.resolve(path.dirname(assemblySettingsPath), 'package.json');    
+
+    if (!fs.existsSync(this.packagePath)) {
+      throw new Error("ewibs assemblies require a package.json file");
+    }
+
+    this.package = JSON.parse(fs.readFileSync(this.packagePath, 'utf-8'));
+    this.settings = JSON.parse(fs.readFileSync(this.assemblySettingsPath, 'utf-8'));
     
     this.absBasePath = path.dirname(this.packagePath);
-    this.absRootPath = path.resolve(this.absBasePath, this.meta.spbp.root);
+    this.absRootPath = path.resolve(this.absBasePath, this.settings.root);
     this.absGlobPath = path.join(this.absRootPath, '**', '*.ts');
-    this.absOutPath = path.join(this.absBasePath, this.meta.spbp.dist);
+    this.absOutPath = path.join(this.absBasePath, this.settings.dist);
     
     this.watcher = globWatch([ this.absGlobPath, `!${this.absOutPath}` ])
 
@@ -82,6 +98,15 @@ export abstract class Assembly implements IAssembly {
   abstract import(file: string): Promise<IComponent>;
   abstract removeModuleFromCache(file: string): Promise<void>;
 
+  public getLoadPromise(): Promise<any> {
+    return lastValueFrom(this.$load.pipe(filter(v => !!v), first()));
+  }
+
+  async getBundlePromise(): Promise<Bundle> {
+    await this.getLoadPromise();
+    return this.bundle!;
+  }
+
   async reloadModule(file: string): Promise<IComponent> {
     await this.removeModuleFromCache(file);
     return Migrate(await this.import(file));
@@ -106,8 +131,10 @@ export abstract class Assembly implements IAssembly {
 
     this.validate();
 
-    this.loadSubject.next(null);
+    this.loadSubject.next(true);
 
     this.oldData = this.cloneComps();
+
+    console.log('Finished reloading');
   }
 }

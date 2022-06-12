@@ -1,0 +1,7 @@
+.index > a:nth-of-type(1) {
+  color: blue;
+}
+
+.index > p:nth-of-type(1) {
+  color: red;
+}

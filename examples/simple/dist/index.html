@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>index</title>
+    <base href="" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    />
+
+    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="stylesheet" href="assets/index.css" />
+  </head>
+  <body class="index">
+    <!--
+        Component: index
+        IO: {"inputs":{}}
+        Comp Data: {"meta":{"name":"asdf","page":{"url":"index"}},"body":{"text":"Hello world","children":[{"tagName":"a","text":"asdf","attributes":{"href":"about.html"},"styles":{"color":"blue"}},{"tagName":"p","text":"asdf","children":[{"ref":"components/button","io":{"inputs":{}}}],"styles":{"color":"red"}},{"ref":"components/button","io":{"inputs":{}}}]}}
+      -->
+
+    <!-- selector: .index -->
+    Hello world
+
+    <!-- selector: .index >
+          a:nth-of-type(1) -->
+    <a href="about.html">asdf</a>
+
+    <!-- selector: .index >
+          p:nth-of-type(1) -->
+    <p>
+      asdf
+
+      <!--
+        Component: components/button
+        IO: {"inputs":{}}
+        Comp Data: {"meta":{"name":"Button"},"body":{"tagName":"button","text":"asdfff","identifier":"test-button","js":"console.log(element)","styles":{"border":"1px solid red"}}}
+      -->
+
+      <!-- selector: .test-button -->
+      <button class="test-button">asdfff</button>
+    </p>
+
+    <!--
+        Component: components/button
+        IO: {"inputs":{}}
+        Comp Data: {"meta":{"name":"Button"},"body":{"tagName":"button","text":"asdfff","identifier":"test-button","js":"console.log(element)","styles":{"border":"1px solid red"}}}
+      -->
+
+    <!-- selector: .test-button -->
+    <button class="test-button">asdfff</button>
+
+    <script type="text/javascript" src="assets/main.js"></script>
+    <script type="text/javascript" src="assets/index.js"></script>
+  </body>
+</html>

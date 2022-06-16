@@ -59,6 +59,8 @@ export abstract class Assembly implements IAssembly {
 
     this.reload();
     this.watcher.on('change', () => this.reload());
+    this.watcher.on('add', () => this.reload());
+    this.watcher.on('unlink', () => this.reload());
   }
 
   validate() {

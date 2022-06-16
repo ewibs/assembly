@@ -18,7 +18,7 @@ export const meta: IComponentMeta = {
   page: { url: "about/test" },
 };
 
-export const styles: Partial<CSSStyleDeclaration> = {};
+export const styles: Partial<CSSStyleDeclaration> = { background: "blue" };
 
 export const body: ComponentBody = {
   text: "",

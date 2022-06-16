@@ -116,6 +116,10 @@ export function CompileComponentIndex(
     `)}
   `.trim());
 
+  if (Object.values(comp.styles).filter(v => !!v).length > 0) {
+    context.cssMM.add(page, 'body, html', comp.styles);
+  }
+
   return `
     ${assembly.mode === AssemblyMode.debug ? `
       <!--

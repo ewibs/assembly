@@ -1,10 +1,9 @@
-import fs from 'fs';
-import path from 'path';
 import { format } from 'prettier';
 import parserCss from 'prettier/parser-postcss';
 
 import { IBundleContext } from './compile';
 import { ModuleMap } from './module-map';
+import { normalizeCSS } from './normalize';
 
 export class CompilerStyleSheet extends ModuleMap<Partial<CSSStyleDeclaration>> {
 
@@ -51,7 +50,7 @@ export class CompilerStyleSheet extends ModuleMap<Partial<CSSStyleDeclaration>> 
     `);
     if (this.context.assembly.settings.globalStyle.normalize) {
       return format(`
-        ${fs.readFileSync(path.resolve(__dirname, 'normalize.css'))}
+        ${normalizeCSS}
         ${base}
       `, { parser: this.parser, plugins: [parserCss] });
     }

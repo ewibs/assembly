@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "tsnd --respawn test/index.ts",
+    "debug": "tsnd --respawn --watch bundler,models,utils,test,assembly.ts test/index.ts",
     "prepublishOnly": "tsc && cp -r ./lib/* . && rm -rf ./lib",
     "postpublish": "git clean -fd"
   },

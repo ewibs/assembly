@@ -1,4 +1,1 @@
-{
-  "root": "src",
-  "dist": "dist"
-}
+{"root":"src","dist":"dist","globalStyle":{"normalize":true,"styles":{"background":"red"}}}

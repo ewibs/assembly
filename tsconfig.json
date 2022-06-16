@@ -13,6 +13,7 @@
     "outDir": "./lib"
   },
   "exclude": [
-    "test"
+    "test",
+    "examples"
   ]
 }

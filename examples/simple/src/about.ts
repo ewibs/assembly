@@ -18,6 +18,8 @@ export const meta: IComponentMeta = {
   page: { url: "about/test" },
 };
 
+export const styles: Partial<CSSStyleDeclaration> = {};
+
 export const body: ComponentBody = {
   text: "",
   children: [
@@ -43,7 +45,10 @@ export const body: ComponentBody = {
           children: [],
         },
         { ref: "components/title", io: { inputs: { title: "Custom title" } } },
-        { ref: "components/title", io: { inputs: { title: "fafafa" } } },
+        {
+          ref: "components/title",
+          io: { inputs: { title: "Delegated title" } },
+        },
       ],
       styles: {
         fontWeight: "bolder",

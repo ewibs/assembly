@@ -16,9 +16,11 @@ export const meta: IComponentMeta = {
   },
 };
 
+export const styles: Partial<CSSStyleDeclaration> = {};
+
 export const body: ComponentBody = {
   editor: { name: "subtitle" },
   tagName: "h3",
-  text: "fafafa",
+  text: "Delegated title",
   styles: { borderBottom: "1px solid black" },
 };

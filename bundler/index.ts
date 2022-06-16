@@ -5,17 +5,17 @@ import parserHTML from "prettier/parser-html";
 
 import { AssemblyMode, IAssembly } from "../models/assembly";
 import { PageMeta } from '../models/component';
-import { CompilePage, IBunldeContext } from "./compile";
+import { CompilePage, IBundleContext } from "./compile";
 import { JSModuleMap } from './js-module-map';
-import { ComilerStyleSheet } from './stylesheet';
+import { CompilerStyleSheet } from './stylesheet';
 
-export class Bundle implements IBunldeContext {
+export class Bundle implements IBundleContext {
 
   public readonly files = new Map<string, string>();
   
   public readonly pages = new Map<string, { html: string, meta: PageMeta }>();
-  public readonly cssMM = new ComilerStyleSheet();
-  public readonly jsMM = new JSModuleMap();
+  public readonly cssMM = new CompilerStyleSheet(this) as CompilerStyleSheet; // what even is this and why doesn't typescript like me?
+  public readonly jsMM = new JSModuleMap(this) as JSModuleMap; // what even is this and why doesn't typescript like me?
   public mode: AssemblyMode;
 
   constructor(public readonly assembly: IAssembly) { 

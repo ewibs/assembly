@@ -13,20 +13,21 @@ import {
   UnwrappableHTMLTags,
 } from '../models/component';
 import { JSModuleMap } from './js-module-map';
-import { ComilerStyleSheet } from './stylesheet';
+import { CompilerStyleSheet } from './stylesheet';
 
-export interface IBunldeContext {
+export interface IBundleContext {
   mode: AssemblyMode;
   pages: Map<string, { html: string, meta: PageMeta }>;
-  cssMM: ComilerStyleSheet;
+  cssMM: CompilerStyleSheet;
   jsMM: JSModuleMap;
+  readonly assembly: IAssembly;
 }
 
 type CompilerResult = string;
 
 export function CompileComponentBody(
   assembly: IAssembly,
-  context: IBunldeContext,
+  context: IBundleContext,
   page: string,
   _selector: string,
   body: ComponentBody
@@ -99,7 +100,7 @@ export function CompileComponentBody(
 
 export function CompileComponentIndex(
   assembly: IAssembly,
-  context: IBunldeContext,
+  context: IBundleContext,
   page: string,
   index: string,
   io: IORefValueMap
@@ -124,16 +125,16 @@ export function CompileComponentIndex(
       -->
     ` : ''}
     ${CompileComponentBody(
-      assembly,
-      context,
-      page,
-      `.${index.replace('/', '_')}`,
-      comp.body
-    )}
+    assembly,
+    context,
+    page,
+    `.${index.replace('/', '_')}`,
+    comp.body
+  )}
   `;
 }
 
-export function CompilePage(assembly: IAssembly, context: IBunldeContext, page: string) {
+export function CompilePage(assembly: IAssembly, context: IBundleContext, page: string) {
   if (!assembly.components.has(page)) { throw new Error(`Page with identifier ${page} doesn't exist!`); }
   const { meta } = assembly.components.get(page)!;
   if (!meta.page) { throw new Error(`Component with identifier ${page} is not a page!`); }

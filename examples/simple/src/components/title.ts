@@ -16,12 +16,17 @@ export const meta: IComponentMeta = {
   },
 };
 
+export const styles: Partial<CSSStyleDeclaration> = {};
+
 export const body: ComponentBody = {
   editor: { name: "pipi" },
   tagName: "h1",
   text: "",
   styles: { border: "1px solid green" },
   children: [
-    { ref: "components/subtitle", io: { inputs: { subtitle: "fafafa" } } },
+    {
+      ref: "components/subtitle",
+      io: { inputs: { subtitle: "Delegated title" } },
+    },
   ],
 };

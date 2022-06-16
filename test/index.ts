@@ -1,10 +1,9 @@
 import path from 'path';
+
 import { Assembly } from '../assembly';
 import { IComponent } from '../models/component';
 
-const baseUrl = path.resolve(__dirname, '../examples/simple/simple.ewibs')
-
-console.log(baseUrl);
+const baseUrl = path.resolve(__dirname, '../examples/simple/simple.ewibs');
 
 class TestAssembly extends Assembly {
 
@@ -21,4 +20,5 @@ const assembly = new TestAssembly(baseUrl);
 
 assembly.getBundlePromise().then(bundle => {
   bundle.export();
+  assembly.save();
 });

@@ -1,6 +1,7 @@
 import { BuiltInParserName, CustomParser, format, LiteralUnion } from "prettier";
 import parserBabel from "prettier/parser-babel";
 import parserCss from "prettier/parser-postcss";
+import { IBundleContext } from "./compile";
 
 export abstract class ModuleMap<T> {
   protected readonly map = new Map<string, {
@@ -22,6 +23,7 @@ export abstract class ModuleMap<T> {
   abstract parser?: LiteralUnion<BuiltInParserName, string> | CustomParser;
   abstract renderModule(content: T, module: string): string;
   abstract wrap(renderedContent: string, page?: string): string;
+  abstract readonly context: IBundleContext;
   
   renderModules(modules: string[], page?: string): string {
     return format(

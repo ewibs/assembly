@@ -11,6 +11,10 @@ export interface IPackage {
 export interface IAssemblySettings {
   root: string;
   dist: string;
+  globalStyle: {
+    normalize: boolean;
+    styles: Partial<CSSStyleDeclaration>;
+  };
 }
 
 export enum AssemblyMode { 

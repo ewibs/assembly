@@ -5,6 +5,8 @@ import {
 
 export const meta: IComponentMeta = { name: "asdf", page: { url: "index" } };
 
+export const styles: Partial<CSSStyleDeclaration> = {};
+
 export const body: ComponentBody = {
   text: "Hello world",
   children: [

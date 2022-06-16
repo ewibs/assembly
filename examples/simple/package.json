@@ -2,6 +2,6 @@
   "name": "simpledemonstrationpage",
   "dependencies": {
     "@babel/parser": "^7.18.3",
-    "@ewibs/assembly": "^0.0.6"
+    "@ewibs/assembly": "file:/../../"
   }
 }

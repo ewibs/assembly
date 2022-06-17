@@ -116,10 +116,6 @@ export function CompileComponentIndex(
     `)}
   `.trim());
 
-  if (Object.values(comp.styles).filter(v => !!v).length > 0) {
-    context.cssMM.add(page, 'body, html', comp.styles);
-  }
-
   return `
     ${assembly.mode === AssemblyMode.debug ? `
       <!--
@@ -142,6 +138,11 @@ export function CompilePage(assembly: IAssembly, context: IBundleContext, page: 
   if (!assembly.components.has(page)) { throw new Error(`Page with identifier ${page} doesn't exist!`); }
   const { meta } = assembly.components.get(page)!;
   if (!meta.page) { throw new Error(`Component with identifier ${page} is not a page!`); }
+
+  if (meta.page?.styles && Object.values(meta.page?.styles).filter(v => !!v).length > 0) {
+    context.cssMM.add(page, 'body, html', meta.page.styles);
+  }
+
   context.pages.set(page, {
     html: CompileComponentIndex(assembly, context, page, page, { inputs: {} }),
     meta: meta.page!

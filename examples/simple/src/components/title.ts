@@ -16,8 +16,6 @@ export const meta: IComponentMeta = {
   },
 };
 
-export const styles: Partial<CSSStyleDeclaration> = {};
-
 export const body: ComponentBody = {
   editor: { name: "pipi" },
   tagName: "h1",

@@ -64,6 +64,5 @@ export type NoRefComponentBody = Exclude<ComponentBody, RefComponentBody>;
 
 export interface IComponent {
   meta: IComponentMeta;
-  styles: Partial<CSSStyleDeclaration>;
   body: ComponentBody;
 }

@@ -5,8 +5,6 @@ import {
 
 export const meta: IComponentMeta = { name: "Button" };
 
-export const styles: Partial<CSSStyleDeclaration> = {};
-
 export const body: ComponentBody = {
   tagName: "button",
   text: "asdfff",

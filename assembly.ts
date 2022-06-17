@@ -86,8 +86,6 @@ export abstract class Assembly implements IAssembly {
 
           export const meta: IComponentMeta = ${JSON.stringify(component.meta)};
 
-          export const styles: Partial<CSSStyleDeclaration> = ${JSON.stringify(component.styles)};
-
           export const body: ComponentBody = ${JSON.stringify(component.body)};
         `, { parser: 'babel', plugins: [parserBabel] })
       );

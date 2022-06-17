@@ -15,10 +15,8 @@ export const meta: IComponentMeta = {
       test: { type: "string", delegation: ["text"], default: "" },
     },
   },
-  page: { url: "about/test" },
+  page: { url: "about/test", styles: { background: "green" } },
 };
-
-export const styles: Partial<CSSStyleDeclaration> = { background: "blue" };
 
 export const body: ComponentBody = {
   text: "",

@@ -7,6 +7,6 @@ export const meta: IComponentMeta = { name: "Seperator" };
 
 export const body: ComponentBody = {
   tagName: "hr",
-  styles: { border: "1px solid red" },
+  styles: { base: { border: "1px solid red" } },
   text: "asd",
 };

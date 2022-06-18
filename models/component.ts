@@ -1,5 +1,5 @@
-import { OptionalChain } from "typescript";
-import { IO, IORefValueMap } from "./io";
+import { IO, IORefValueMap } from './io';
+import { Styles } from './styles';
 
 export type Primitive = string | boolean | number | undefined;
 export type UnionToType<U extends Record<string, unknown>> = { [K in (U extends unknown ? keyof U : never)]: U extends unknown ? K extends keyof U ? U[K] : never : never }
@@ -33,7 +33,7 @@ export type TagComponentJS = {
 };
 
 export type TagComponentCSS = {
-  styles: Partial<CSSStyleDeclaration>,
+  styles: Styles,
 };
 
 // SHOULD DEFINETLY NOT BE ANY BUT TS IS SO FUCKING CONFUSING
@@ -47,7 +47,7 @@ export type ComponentBodyGeneric<TagName> = TagName extends NoWrapHTMLElementTag
         ComponentBodyGeneric<TagName>>
     >,
     identifier?: string,
-    styles?: Partial<CSSStyleDeclaration>,
+    styles?: Styles,
     js?: string,
     text?: string,
     children?: (ComponentBody)[],

@@ -1,4 +1,5 @@
-import { IComponent } from "./component";
+import { IComponent } from './component';
+import { Styles } from './styles';
 
 export interface IAssemblyDefinitions {
 }
@@ -13,7 +14,7 @@ export interface IAssemblySettings {
   dist: string;
   globalStyle: {
     normalize: boolean;
-    styles: Partial<CSSStyleDeclaration>;
+    styles: Styles;
   };
 }
 

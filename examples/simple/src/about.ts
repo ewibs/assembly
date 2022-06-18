@@ -15,7 +15,19 @@ export const meta: IComponentMeta = {
       test: { type: "string", delegation: ["text"], default: "" },
     },
   },
-  page: { url: "about/test", styles: { background: "green" } },
+  page: {
+    url: "about/test",
+    styles: {
+      mediaQueries: [
+        {
+          types: [{ type: "screen" }],
+          features: [{ feature: "width", value: "500px" }],
+          styles: { background: "red" },
+        },
+      ],
+      base: { background: "green" },
+    },
+  },
 };
 
 export const body: ComponentBody = {
@@ -25,7 +37,7 @@ export const body: ComponentBody = {
       tagName: "a",
       text: "Home",
       attributes: { href: "index.html" },
-      styles: {},
+      styles: { base: {} },
       children: [
         { ref: "components/button", io: { inputs: {} } },
         { text: "Hello world" },
@@ -39,7 +51,7 @@ export const body: ComponentBody = {
         {
           tagName: "p",
           text: "asdfdeep",
-          styles: { background: "green" },
+          styles: { base: { background: "green" } },
           children: [],
         },
         { ref: "components/title", io: { inputs: { title: "Custom title" } } },
@@ -49,13 +61,15 @@ export const body: ComponentBody = {
         },
       ],
       styles: {
-        fontWeight: "bolder",
-        backgroundColor: "yellow",
-        display: "flex",
+        base: {
+          fontWeight: "bolder",
+          backgroundColor: "yellow",
+          display: "flex",
+        },
       },
     },
     { ref: "components/button", io: { inputs: {} } },
     { ref: "components/button", io: { inputs: {} } },
   ],
-  styles: {},
+  styles: { base: {} },
 };

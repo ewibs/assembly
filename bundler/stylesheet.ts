@@ -1,19 +1,20 @@
-import { format } from 'prettier';
+import { BuiltInParserName, CustomParser, format, LiteralUnion } from 'prettier';
 import parserCss from 'prettier/parser-postcss';
 
+import { Styles } from '../models/styles';
 import { WriteCSSRule } from '../utils/css';
 import { IBundleContext } from './compile';
 import { ModuleMap } from './module-map';
 import { normalizeCSS } from './normalize';
 
-export class CompilerStyleSheet extends ModuleMap<Partial<CSSStyleDeclaration>> {
+export class CompilerStyleSheet extends ModuleMap<Styles> {
 
   constructor(public readonly context: IBundleContext) { super(); }
 
   parser = 'css';
 
-  renderModule(content: Partial<CSSStyleDeclaration>, module: string): string {
-    return WriteCSSRule(content, module)
+  renderModule(content: Styles, module: string): string {
+    return Object.entries(WriteCSSRule(content, module)).map(([query, value]) => query === 'base' ? value : `${query} {${value}}`).join('\n')
   }
 
   wrap(renderedContent: string): string {

@@ -20,7 +20,16 @@ export const body: ComponentBody = {
   editor: { name: "pipi" },
   tagName: "h1",
   text: "",
-  styles: { border: "1px solid green" },
+  styles: {
+    mediaQueries: [
+      {
+        types: [{ type: "screen" }],
+        features: [{ feature: "width", value: "500px" }],
+        styles: { background: "red" },
+      },
+    ],
+    base: { border: "1px solid green" },
+  },
   children: [
     {
       ref: "components/subtitle",

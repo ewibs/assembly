@@ -24,7 +24,10 @@ export const body: ComponentBody = {
     mediaQueries: [
       {
         types: [{ type: "screen" }],
-        features: [{ feature: "width", value: "500px" }],
+        features: [
+          { feature: "width", min: "500px" },
+          { feature: "width", max: "700px" },
+        ],
         styles: { background: "red" },
       },
     ],

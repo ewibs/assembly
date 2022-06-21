@@ -1,4 +1,5 @@
 import path from 'path';
+import { map, switchMap, withLatestFrom } from 'rxjs';
 
 import { Assembly } from '../assembly';
 import { IComponent } from '../models/component';
@@ -18,7 +19,10 @@ class TestAssembly extends Assembly {
 
 const assembly = new TestAssembly(baseUrl);
 
-assembly.getBundlePromise().then(bundle => {
-  bundle.export();
+// assembly.getBundlePromise().then(bundle => {
+// });
+
+assembly.$load.subscribe(() => {
+  assembly.bundle?.export();
   assembly.save();
-});
+})

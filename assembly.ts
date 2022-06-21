@@ -10,6 +10,7 @@ import globWatch from 'glob-watcher';
 import { format } from 'prettier';
 import parserBabel from "prettier/parser-babel";
 import { Migrate } from './utils/component';
+import { WriteIfDiff } from './utils/fs-extended';
 
 export abstract class Assembly implements IAssembly {
 
@@ -40,8 +41,8 @@ export abstract class Assembly implements IAssembly {
     if (!fs.existsSync(this.assemblySettingsPath)) {
       throw new Error("ewibs assemblies settings file doesn't exist ");
     }
-    
-    this.packagePath = path.resolve(path.dirname(assemblySettingsPath), 'package.json');    
+
+    this.packagePath = path.resolve(path.dirname(assemblySettingsPath), 'package.json');
 
     if (!fs.existsSync(this.packagePath)) {
       throw new Error("ewibs assemblies require a package.json file");
@@ -49,13 +50,17 @@ export abstract class Assembly implements IAssembly {
 
     this.package = JSON.parse(fs.readFileSync(this.packagePath, 'utf-8'));
     this.settings = JSON.parse(fs.readFileSync(this.assemblySettingsPath, 'utf-8'));
-    
+
     this.absBasePath = path.dirname(this.packagePath);
     this.absRootPath = path.resolve(this.absBasePath, this.settings.root);
     this.absGlobPath = path.join(this.absRootPath, '**', '*.ts');
     this.absOutPath = path.join(this.absBasePath, this.settings.dist);
-    
-    this.watcher = globWatch([ this.absGlobPath, `!${this.absOutPath}` ])
+
+    this.watcher = globWatch([
+      this.assemblySettingsPath,
+      this.absGlobPath,
+      `!${this.absOutPath}`
+    ])
 
     this.reload();
     this.watcher.on('change', () => this.reload());
@@ -79,18 +84,15 @@ export abstract class Assembly implements IAssembly {
     this.components.forEach((component, key) => {
       const fullPath = path.resolve(this.absRootPath, key + '.ts');
       fs.mkdirSync(path.dirname(fullPath), { recursive: true });
-      fs.writeFileSync(
-        fullPath,
-        format(`
-          import { IComponentMeta, ComponentBody } from "@ewibs/assembly/models/component";
+      WriteIfDiff(fullPath, format(`
+      import { IComponentMeta, ComponentBody } from "@ewibs/assembly/models/component";
 
-          export const meta: IComponentMeta = ${JSON.stringify(component.meta)};
+      export const meta: IComponentMeta = ${JSON.stringify(component.meta)};
 
-          export const body: ComponentBody = ${JSON.stringify(component.body)};
-        `, { parser: 'babel', plugins: [parserBabel] })
-      );
+      export const body: ComponentBody = ${JSON.stringify(component.body)};
+    `, { parser: 'babel', plugins: [parserBabel] }));
     });
-    fs.writeFileSync(this.assemblySettingsPath, JSON.stringify(this.settings), 'utf-8');
+    WriteIfDiff(this.assemblySettingsPath, JSON.stringify(this.settings));
   }
 
   destroy() {
@@ -118,13 +120,13 @@ export abstract class Assembly implements IAssembly {
   private cloneComps(): Map<string, IComponent> {
     return new Map<string, IComponent>(JSON.parse(JSON.stringify([...this.components.entries()])));
   }
-  
+
   async reload() {
     console.log('Reloading assembly');
 
     this.files = new GlobSync(this.absGlobPath);
     this.components.clear();
-    
+
     for (var file of this.files.found) {
       const identifier = path.relative(this.absRootPath, file).replace('.ts', '');
       this.components.set(identifier, await this.reloadModule(file));

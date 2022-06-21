@@ -1,1 +1,1 @@
-{"root":"src","dist":"dist","globalStyle":{"normalize":true,"styles":{"background":"red"}}}
+{"root":"src","dist":"dist","globalStyle":{"normalize":false,"styles":{"background":"red"}}}

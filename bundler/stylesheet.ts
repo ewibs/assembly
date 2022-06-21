@@ -1,4 +1,4 @@
-import { BuiltInParserName, CustomParser, format, LiteralUnion } from 'prettier';
+import { format } from 'prettier';
 import parserCss from 'prettier/parser-postcss';
 
 import { Styles } from '../models/styles';
@@ -13,9 +13,7 @@ export class CompilerStyleSheet extends ModuleMap<Styles> {
 
   parser = 'css';
 
-  renderModule(content: Styles, module: string): string {
-    return Object.entries(WriteCSSRule(content, module)).map(([query, value]) => query === 'base' ? value : `${query} {${value}}`).join('\n')
-  }
+  renderModule(content: Styles, module: string): string { return WriteCSSRule(content, module); }
 
   wrap(renderedContent: string): string {
     return `

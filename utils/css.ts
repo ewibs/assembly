@@ -46,7 +46,7 @@ export function BuildMediaQueryString({ types, features }: { types?: MediaTypeLi
   return `@media ${type} ${features.map((v, i) => BuildMediaQueryStringFeature(v, !i)).join(' ')}`;
 }
 
-export function WriteCSSRule(content: Styles, module: string): { [query: string]: string } {
+export function GenerateCSSRuleQueries(content: Styles, module: string): { [query: string]: string } {
   return (content.mediaQueries || []).reduce((all, query) => ({
     ...all,
     [BuildMediaQueryString(query)]: WriteCSSRuleContent(query.styles, module)
@@ -55,6 +55,11 @@ export function WriteCSSRule(content: Styles, module: string): { [query: string]
   });
 }
 
+export function WriteCSSRule(content: Styles, module: string): string {
+  return Object.entries(GenerateCSSRuleQueries(content, module))
+    .map(([query, value]) => query === 'base' ? value : `${query} {${value}}`).join('\n');
+}
+
 export function GetMediaQueries(content: Styles, module: string): string[] {
-  return Object.keys(WriteCSSRule(content, module)).filter(v => v !== 'base');
+  return Object.keys(GenerateCSSRuleQueries(content, module)).filter(v => v !== 'base');
 }

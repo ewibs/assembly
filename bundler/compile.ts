@@ -14,12 +14,14 @@ import {
 } from '../models/component';
 import { JSModuleMap } from './js-module-map';
 import { CompilerStyleSheet } from './stylesheet';
+import { AssetsMap } from './assets-map';
 
 export interface IBundleContext {
   mode: AssemblyMode;
   pages: Map<string, { html: string, meta: PageMeta }>;
   cssMM: CompilerStyleSheet;
   jsMM: JSModuleMap;
+  assets: AssetsMap;
   readonly assembly: IAssembly;
 }
 

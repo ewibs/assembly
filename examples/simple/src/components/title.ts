@@ -28,7 +28,12 @@ export const body: ComponentBody = {
           { feature: "width", min: "500px" },
           { feature: "width", max: "700px" },
         ],
-        styles: { background: "red" },
+        styles: {
+          background: [
+            { color: "red", image: "assets://example.png" },
+            { position: "center top", image: "assets://example.png" },
+          ],
+        },
       },
     ],
     base: { border: "1px solid green" },

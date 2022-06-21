@@ -5,17 +5,19 @@ import parserHTML from "prettier/parser-html";
 
 import { AssemblyMode, IAssembly } from "../models/assembly";
 import { PageMeta } from '../models/component';
+import { AssetsMap } from './assets-map';
 import { CompilePage, IBundleContext } from "./compile";
 import { JSModuleMap } from './js-module-map';
 import { CompilerStyleSheet } from './stylesheet';
 
 export class Bundle implements IBundleContext {
 
-  public readonly files = new Map<string, string>();
+  public readonly files = new Map<string, string | NodeJS.ArrayBufferView>();
   
   public readonly pages = new Map<string, { html: string, meta: PageMeta }>();
   public readonly cssMM = new CompilerStyleSheet(this) as CompilerStyleSheet; // what even is this and why doesn't typescript like me?
   public readonly jsMM = new JSModuleMap(this) as JSModuleMap; // what even is this and why doesn't typescript like me?
+  public readonly assets = new AssetsMap(this) as AssetsMap; // what even is this and why doesn't typescript like me?
   public mode: AssemblyMode;
 
   constructor(public readonly assembly: IAssembly) { 
@@ -45,7 +47,7 @@ export class Bundle implements IBundleContext {
           <html>
             <head>
               <title>${meta.url}</title>
-              <base href="${path.relative(path.dirname(meta.url), '')}">
+              <base href="${path.relative(path.dirname(meta.url), '') || './'}">
               <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
   
               <link rel="stylesheet" href="assets/styles.css">
@@ -65,9 +67,8 @@ export class Bundle implements IBundleContext {
           <h1 style="color: red; font-weight: bold;">Error while parsing html ${e}</h1>
         `);
       }
-
-
-    })
+    });
+    this.assets.assets.forEach((v, key) => this.files.set(`assets/${key}`, v.file));
   }
 
   private getAbsFileName(file: string) {

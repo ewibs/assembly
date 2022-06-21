@@ -1,1 +1,57 @@
-{"root":"src","dist":"dist","globalStyle":{"normalize":false,"styles":{"background":"red"}}}
+{
+  "root": "src",
+  "dist": "dist",
+  "assets": "assets",
+  "globalStyle": {
+    "normalize": false,
+    "styles": {
+      "base": {
+        "background": [
+          {
+            "color": "red"
+          }
+        ],
+        "font-family": "Melete"
+      }
+    },
+    "fontFaces": [
+      {
+        "family": "Melete",
+        "sources": [
+          {
+            "url": "assets://fonts/melete_0200/Melete-UltraLight.otf",
+            "descriptors": {
+              "font-weight": 100,
+              "font-style": "italic"
+            }
+          },
+          {
+            "url": "assets://fonts/melete_0200/Melete-Bold.otf",
+            "descriptors": {
+              "font-weight": 100,
+              "font-style": "italic"
+            }
+          },
+          {
+            "url": "assets://fonts/melete_0200/Melete-Light.otf",
+            "descriptors": {
+              "font-weight": 300
+            }
+          },
+          {
+            "url": "assets://fonts/melete_0200/Melete-Medium.otf",
+            "descriptors": {
+              "font-weight": 400
+            }
+          },
+          {
+            "url": "assets://fonts/melete_0200/Melete-Regular.otf",
+            "descriptors": {
+              "font-weight": 500
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

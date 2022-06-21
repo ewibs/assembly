@@ -3,6 +3,7 @@ import parserCss from 'prettier/parser-postcss';
 
 import { Styles } from '../models/styles';
 import { WriteCSSRule } from '../utils/css';
+import { BuildFontFaces } from '../utils/font-face';
 import { IBundleContext } from './compile';
 import { ModuleMap } from './module-map';
 import { normalizeCSS } from './normalize';
@@ -13,7 +14,9 @@ export class CompilerStyleSheet extends ModuleMap<Styles> {
 
   parser = 'css';
 
-  renderModule(content: Styles, module: string): string { return WriteCSSRule(content, module); }
+  renderModule(content: Styles, module: string): string {
+    return WriteCSSRule(content, module, this.context.assets);
+  }
 
   wrap(renderedContent: string): string {
     return `
@@ -29,16 +32,14 @@ export class CompilerStyleSheet extends ModuleMap<Styles> {
 
   override renderGlobal(): string {
     const base = this.wrap(`
+      ${BuildFontFaces(this.context.assembly.settings.globalStyle.fontFaces, this.context.assets)}
       ${this.renderModule(this.context.assembly.settings.globalStyle.styles, 'body, html')}
       ${this.unwrap(super.renderGlobal())}
     `);
-    if (this.context.assembly.settings.globalStyle.normalize) {
-      return format(`
-        ${normalizeCSS}
-        ${base}
-      `, { parser: this.parser, plugins: [parserCss] });
-    }
-    return base;
+    return format(`
+      ${this.context.assembly.settings.globalStyle.normalize ? normalizeCSS : ''}
+      ${base}
+    `, { parser: this.parser, plugins: [parserCss] });
   }
 
 }

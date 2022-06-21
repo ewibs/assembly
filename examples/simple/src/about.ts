@@ -22,10 +22,10 @@ export const meta: IComponentMeta = {
         {
           types: [{ type: "screen" }],
           features: [{ feature: "width", value: "500px" }],
-          styles: { background: "red" },
+          styles: { background: [{ color: "red" }] },
         },
       ],
-      base: { background: "green" },
+      base: { background: [{ color: "green" }] },
     },
   },
 };
@@ -51,7 +51,7 @@ export const body: ComponentBody = {
         {
           tagName: "p",
           text: "asdfdeep",
-          styles: { base: { background: "green" } },
+          styles: { base: { background: [{ color: "green" }] } },
           children: [],
         },
         { ref: "components/title", io: { inputs: { title: "Custom title" } } },
@@ -63,7 +63,7 @@ export const body: ComponentBody = {
       styles: {
         base: {
           fontWeight: "bolder",
-          backgroundColor: "yellow",
+          background: [{ color: "yellow" }],
           display: "flex",
         },
       },

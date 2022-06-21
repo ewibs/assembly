@@ -24,5 +24,5 @@ const assembly = new TestAssembly(baseUrl);
 
 assembly.$load.subscribe(() => {
   assembly.bundle?.export();
-  assembly.save();
+  // assembly.save();
 })

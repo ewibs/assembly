@@ -16,17 +16,18 @@ export abstract class Assembly implements IAssembly {
 
   private oldData?: Map<string, IComponent>;
 
-  public readonly package: IPackage;
-  public readonly settings: IAssemblySettings;
+  public package: IPackage;
+  public settings: IAssemblySettings;
   private files?: IGlobBase;
   public components = new Map<string, IComponent>();
   public bundle?: Bundle;
 
   public readonly packagePath: string;
-  private readonly absBasePath: string;
-  private readonly absRootPath: string;
-  private readonly absGlobPath: string;
-  public readonly absOutPath: string;
+  private absBasePath: string;
+  private absRootPath: string;
+  public absAssetsPath: string;
+  private absGlobPath: string;
+  public absOutPath: string;
 
   private readonly loadSubject = new BehaviorSubject<boolean>(false);
   private readonly watcher: fs.FSWatcher;
@@ -53,6 +54,7 @@ export abstract class Assembly implements IAssembly {
 
     this.absBasePath = path.dirname(this.packagePath);
     this.absRootPath = path.resolve(this.absBasePath, this.settings.root);
+    this.absAssetsPath = path.resolve(this.absBasePath, this.settings.assets);
     this.absGlobPath = path.join(this.absRootPath, '**', '*.ts');
     this.absOutPath = path.join(this.absBasePath, this.settings.dist);
 
@@ -123,6 +125,15 @@ export abstract class Assembly implements IAssembly {
 
   async reload() {
     console.log('Reloading assembly');
+
+    this.package = JSON.parse(fs.readFileSync(this.packagePath, 'utf-8'));
+    this.settings = JSON.parse(fs.readFileSync(this.assemblySettingsPath, 'utf-8'));
+
+    this.absBasePath = path.dirname(this.packagePath);
+    this.absRootPath = path.resolve(this.absBasePath, this.settings.root);
+    this.absAssetsPath = path.resolve(this.absBasePath, this.settings.assets);
+    this.absGlobPath = path.join(this.absRootPath, '**', '*.ts');
+    this.absOutPath = path.join(this.absBasePath, this.settings.dist);
 
     this.files = new GlobSync(this.absGlobPath);
     this.components.clear();

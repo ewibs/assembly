@@ -1,3 +1,4 @@
+import { IFontFace } from 'utils/font-face';
 import { IComponent } from './component';
 import { Styles } from './styles';
 
@@ -12,9 +13,11 @@ export interface IPackage {
 export interface IAssemblySettings {
   root: string;
   dist: string;
+  assets: string;
   globalStyle: {
     normalize: boolean;
     styles: Styles;
+    fontFaces: IFontFace[]
   };
 }
 
@@ -33,4 +36,5 @@ export interface IAssemblyData {
 export interface IAssembly extends IAssemblyData {
   readonly package: IPackage;
   readonly absOutPath: string;
+  readonly absAssetsPath: string;
 }

@@ -1,4 +1,30 @@
-export type StyleDeclarations = Partial<CSSStyleDeclaration>;
+export type Background = Partial<{
+  attachment: string,
+  clip: string,
+  color: string,
+  image: string,
+  origin: string,
+  position: string,
+  repeat: string,
+  size: string,
+}>
+
+export type StyleDeclarations = Partial<
+  Omit<
+    CSSStyleDeclaration,
+    'background' |
+    'backgroundAttachment' |
+    'backgroundClip' |
+    'backgroundColor' |
+    'backgroundImage' |
+    'backgroundOrigin' |
+    'backgroundPosition' |
+    'backgroundRepeat' |
+    'backgroundSize'
+  > & {
+    background: Background[];
+  }
+>;
 
 export const MediaTypes = ['all', 'print', 'screen'] as const;
 export type MediaType = (typeof MediaTypes)[number];

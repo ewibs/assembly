@@ -1,5 +1,5 @@
-import { IFontFace } from 'utils/font-face';
 import { IComponent } from './component';
+import { IFontFace } from './font-face';
 import { Styles } from './styles';
 
 export interface IAssemblyDefinitions {

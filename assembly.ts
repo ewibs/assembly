@@ -1,14 +1,15 @@
 import fs from 'fs';
 import { GlobSync, IGlobBase } from 'glob';
+import globWatch from 'glob-watcher';
 import path from 'path';
-import { BehaviorSubject, filter, first, lastValueFrom, map, Observable, Subject, take, takeUntil } from 'rxjs';
-import { Bundle } from './bundler';
+import { format } from 'prettier';
+import parserBabel from 'prettier/parser-babel';
+import { BehaviorSubject, filter, first, lastValueFrom, Observable } from 'rxjs';
 
+import { AssetManager } from './asset-manager';
+import { Bundle } from './bundler';
 import { AssemblyMode, IAssembly, IAssemblyData, IAssemblySettings, IPackage } from './models/assembly';
 import { IComponent } from './models/component';
-import globWatch from 'glob-watcher';
-import { format } from 'prettier';
-import parserBabel from "prettier/parser-babel";
 import { Migrate } from './utils/component';
 import { WriteIfDiff } from './utils/fs-extended';
 
@@ -32,6 +33,8 @@ export abstract class Assembly implements IAssembly {
   private readonly loadSubject = new BehaviorSubject<boolean>(false);
   private readonly watcher: fs.FSWatcher;
   public readonly $load: Observable<any> = this.loadSubject.asObservable();
+
+  public readonly assetManager: AssetManager;
 
   public mode = AssemblyMode.debug;
 
@@ -61,13 +64,16 @@ export abstract class Assembly implements IAssembly {
     this.watcher = globWatch([
       this.assemblySettingsPath,
       this.absGlobPath,
-      `!${this.absOutPath}`
+      `!${this.absOutPath}`,
+      `!${this.absAssetsPath}`
     ])
 
     this.reload();
     this.watcher.on('change', () => this.reload());
     this.watcher.on('add', () => this.reload());
     this.watcher.on('unlink', () => this.reload());
+
+    this.assetManager = new AssetManager(this);
   }
 
   validate() {

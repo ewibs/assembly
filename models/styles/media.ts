@@ -1,30 +1,4 @@
-export type Background = Partial<{
-  attachment: string,
-  clip: string,
-  color: string,
-  image: string,
-  origin: string,
-  position: string,
-  repeat: string,
-  size: string,
-}>
-
-export type StyleDeclarations = Partial<
-  Omit<
-    CSSStyleDeclaration,
-    'background' |
-    'backgroundAttachment' |
-    'backgroundClip' |
-    'backgroundColor' |
-    'backgroundImage' |
-    'backgroundOrigin' |
-    'backgroundPosition' |
-    'backgroundRepeat' |
-    'backgroundSize'
-  > & {
-    background: Background[];
-  }
->;
+import { StyleDeclarations } from './declarations';
 
 export const MediaTypes = ['all', 'print', 'screen'] as const;
 export type MediaType = (typeof MediaTypes)[number];
@@ -77,9 +51,4 @@ export type MediaQuery = {
   types?: MediaTypeList;
   features?: MediaFeatureList;
   styles: StyleDeclarations;
-};
-
-export type Styles = {
-  mediaQueries?: MediaQuery[];
-  base: StyleDeclarations;
 };

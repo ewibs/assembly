@@ -3,6 +3,8 @@ import {
   MediaFeatureList,
   MediaFeatureListItem,
   MediaTypeList,
+  Spacing,
+  Spacings,
   StyleDeclarations,
   Styles,
 } from '../models/styles';
@@ -31,13 +33,31 @@ function RenderBackgroundValueForKey(key: keyof Background, value: Background[],
   }
 }
 
+function RenderSpacing(type: 'margin' | 'padding', spacing: Spacing, context?: ModuleContext): string {
+  return `${type}: ${spacing.top || 'auto'} ${spacing.right || 'auto'} ${spacing.bottom || 'auto'} ${spacing.left || 'auto'};`;
+}
+
+function RenderSpacings(spacings: Spacings, context?: ModuleContext): string {
+  return Object.entries(spacings).map(([key, value]) => {
+    switch (key) {
+      case 'positionType':
+        return `position: ${value};`;
+      case 'size':
+      case 'position':
+        return Object.entries(value).map(([a, b]) => `${a}: ${b};`).join('\n');
+      case 'margin':
+      case 'padding':
+        return RenderSpacing(key, value as any, context);
+    }
+  }).join('\n');
+}
+
 export function WriteCSSItem<
   Property extends keyof StyleDeclarations,
   Value extends StyleDeclarations[Property]
 >(property: Property, value: Value, context?: ModuleContext): string {
   switch (property) {
     case 'background':
-      // background: ${(value as StyleDeclarations["background"])?.map(v => `${v.color}`)};
       const props = new Set<keyof Background>([
         ...(value as StyleDeclarations["background"])!
           .reduce((all, current) => all.concat(...Object.keys(current) as any), [] as (keyof Background)[])
@@ -45,6 +65,7 @@ export function WriteCSSItem<
       return `${[...props].map((key) => {
         return `background-${key}: ${RenderBackgroundValueForKey(key, value as Background[], context)};`
       }).join('\n')}`;
+    case 'spacings': return RenderSpacings(value as Spacings);
     default:
       let regex = /[a-z][A-Z]/g;
       let tries = 0;

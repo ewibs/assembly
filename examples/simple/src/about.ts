@@ -22,7 +22,13 @@ export const meta: IComponentMeta = {
         {
           types: [{ type: "screen" }],
           features: [{ feature: "width", value: "500px" }],
-          styles: { background: [{ color: "red" }] },
+          styles: {
+            background: [{ color: "red" }],
+            alignment: {
+              type: "grid",
+              gridRowStart: '1'
+            }
+          },
         },
       ],
       base: { background: [{ color: "green" }] },
@@ -64,7 +70,12 @@ export const body: ComponentBody = {
         base: {
           text: { fontWeight: "bolder" },
           background: [{ color: "yellow" }],
-          display: "flex",
+          alignment: {
+            type: "flex",
+            grow: '1',
+            alignContent: 'baseline',
+            justifyContent: 'flex-start'
+          }
         },
       },
     },

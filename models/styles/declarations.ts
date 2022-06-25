@@ -1,3 +1,4 @@
+import { Alignment } from './alignment';
 import { StyleAttribute } from './attributes';
 import { Background } from './background';
 import { Border } from './border';
@@ -9,4 +10,5 @@ export type StyleDeclarations = Partial<Pick<CSSStyleDeclaration, StyleAttribute
   spacings: Spacings;
   text: Text;
   border: Border;
+  alignment: Alignment;
 }>;

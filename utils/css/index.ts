@@ -4,8 +4,10 @@ import { StyleDeclarations } from '../../models/styles/declarations';
 import { MediaFeatureList, MediaFeatureListItem, MediaTypeList } from '../../models/styles/media';
 import { Spacing, Spacings } from '../../models/styles/spacings';
 import { Text } from '../../models/styles/text';
+import { RenderAlignment } from './alignment';
 import { RenderBorder } from './border';
 import { ModuleContext } from './definitions';
+import { RenderPropertyValue } from './map-prop';
 
 const BG_DEFAULT: { [key in keyof Omit<Background, 'color' | 'image'>]: string; } = {
   attachment: 'scroll',
@@ -33,18 +35,6 @@ function RenderSpacing(type: 'margin' | 'padding', spacing: Spacing, context?: M
   return `${type}: ${spacing.top || 'auto'} ${spacing.right || 'auto'} ${spacing.bottom || 'auto'} ${spacing.left || 'auto'};`;
 }
 
-function RenderProperty(property: string, value: string): string {
-  if (typeof value !== 'string') { return `/* Couldn't render ${property}: ${JSON.stringify(value)} */`; }
-  let regex = /[a-z][A-Z]/g;
-  let tries = 0;
-  let mappedProp = property as string;
-  while (regex.test(mappedProp) && ++tries < 10) {
-    let index = regex.lastIndex - 1;
-    mappedProp = mappedProp.substring(0, index) + '-' + mappedProp.substring(index);
-  }
-  return `${mappedProp.toLowerCase()}: ${value};`;
-}
-
 function RenderSpacings(spacings: Spacings, context?: ModuleContext): string {
   return Object.entries(spacings).map(([key, value]) => {
     switch (key) {
@@ -57,7 +47,7 @@ function RenderSpacings(spacings: Spacings, context?: ModuleContext): string {
       case 'padding':
         return RenderSpacing(key, value as any, context);
       default:
-        return RenderProperty(key, { value } as any);
+        return RenderPropertyValue(key, value);
     }
   }).join('\n');
 }
@@ -76,19 +66,12 @@ export function WriteCSSItem<
         return `background-${key}: ${RenderBackgroundValueForKey(key, value as Background[], context)};`
       }).join('\n')}`;
     case 'spacings': return RenderSpacings(value as Spacings);
-    case 'border':
-    return RenderBorder(value as any, context);
+    case 'border': return RenderBorder(value as any, context);
+    case 'alignment': return RenderAlignment(value as any, context);
     case 'text':
-      return Object.entries(value as Text).map(([prop, v]) => RenderProperty(prop, v)).join('\n');
+      return Object.entries(value as Text).map(([prop, v]) => RenderPropertyValue(prop, v)).join('\n');
     default:
-      let regex = /[a-z][A-Z]/g;
-      let tries = 0;
-      let mappedProp = property as string;
-      while (regex.test(mappedProp) && ++tries < 10) {
-        let index = regex.lastIndex - 1;
-        mappedProp = mappedProp.substring(0, index) + '-' + mappedProp.substring(index);
-      }
-      return `${mappedProp.toLowerCase()}: ${value};`;
+      return RenderPropertyValue(property, value);
   }
 }
 

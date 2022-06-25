@@ -20,5 +20,17 @@ export const body: ComponentBody = {
   editor: { name: "subtitle" },
   tagName: "h3",
   text: "Delegated title",
-  styles: { base: { borderBottom: "1px solid black" } },
+  styles: {
+    base: {
+      border: {
+        sides: {
+          bottom: {
+            width: '1px',
+            style: 'solid',
+            color: 'black'
+          }
+        }
+      }
+    }
+  },
 };

@@ -1,6 +1,7 @@
 import { FontDescriptor, FontFormat, IFontFace } from 'models/font-face';
 import path from 'path';
-import { ModuleContext } from "./css";
+
+import { ModuleContext } from './css/definitions';
 
 // Propably shouldn't only be based on file ending
 export function FormatFromFile(file: string): FontFormat | undefined {

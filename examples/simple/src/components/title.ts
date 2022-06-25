@@ -36,7 +36,29 @@ export const body: ComponentBody = {
         },
       },
     ],
-    base: { border: "1px solid green" },
+    base: {
+      border: {
+        sides: {
+          left: {
+            style: 'dashed',
+            width: '2px',
+            color: 'blue'
+          },
+          top: {
+            style: 'dotted',
+            width: '4px',
+            color: 'green'
+          },
+          right: {
+            color: 'green'
+          },
+          bottom: {
+            style: 'solid',
+            width: '1px',
+          }
+        }
+      }
+    },
   },
   children: [
     {

@@ -1,0 +1,1 @@
+export type ModuleContext = { resolve: (url: string) => string }

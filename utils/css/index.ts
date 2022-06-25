@@ -1,11 +1,11 @@
-import { Styles } from '../models/styles';
-import { Background } from '../models/styles/background';
-import { StyleDeclarations } from '../models/styles/declarations';
-import { MediaFeatureList, MediaFeatureListItem, MediaTypeList } from '../models/styles/media';
-import { Spacing, Spacings } from '../models/styles/spacings';
-import { Text } from '../models/styles/text';
-
-export type ModuleContext = { resolve: (url: string) => string }
+import { Styles } from '../../models/styles';
+import { Background } from '../../models/styles/background';
+import { StyleDeclarations } from '../../models/styles/declarations';
+import { MediaFeatureList, MediaFeatureListItem, MediaTypeList } from '../../models/styles/media';
+import { Spacing, Spacings } from '../../models/styles/spacings';
+import { Text } from '../../models/styles/text';
+import { RenderBorder } from './border';
+import { ModuleContext } from './definitions';
 
 const BG_DEFAULT: { [key in keyof Omit<Background, 'color' | 'image'>]: string; } = {
   attachment: 'scroll',
@@ -76,6 +76,8 @@ export function WriteCSSItem<
         return `background-${key}: ${RenderBackgroundValueForKey(key, value as Background[], context)};`
       }).join('\n')}`;
     case 'spacings': return RenderSpacings(value as Spacings);
+    case 'border':
+    return RenderBorder(value as any, context);
     case 'text':
       return Object.entries(value as Text).map(([prop, v]) => RenderProperty(prop, v)).join('\n');
     default:

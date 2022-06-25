@@ -10,5 +10,17 @@ export const body: ComponentBody = {
   text: "asdfff",
   identifier: "test-button",
   js: "console.log(element)",
-  styles: { base: { border: "1px solid red" } },
+  styles: {
+    base: {
+      border: {
+        sides: {
+          bottom: {
+            width: '1px',
+            style: 'solid',
+            color: 'black'
+          }
+        }
+      }
+    }
+  },
 };

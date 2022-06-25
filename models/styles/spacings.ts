@@ -9,4 +9,5 @@ export type Spacings = Partial<{
   margin: Partial<Spacing>;
   padding: Partial<Spacing>;
   size: Partial<{ width: string; height: string; }>;
+  zIndex: number;
 }>;

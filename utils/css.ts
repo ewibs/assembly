@@ -1,13 +1,9 @@
-import {
-  Background,
-  MediaFeatureList,
-  MediaFeatureListItem,
-  MediaTypeList,
-  Spacing,
-  Spacings,
-  StyleDeclarations,
-  Styles,
-} from '../models/styles';
+import { Styles } from '../models/styles';
+import { Background } from '../models/styles/background';
+import { StyleDeclarations } from '../models/styles/declarations';
+import { MediaFeatureList, MediaFeatureListItem, MediaTypeList } from '../models/styles/media';
+import { Spacing, Spacings } from '../models/styles/spacings';
+import { Text } from '../models/styles/text';
 
 export type ModuleContext = { resolve: (url: string) => string }
 
@@ -37,6 +33,18 @@ function RenderSpacing(type: 'margin' | 'padding', spacing: Spacing, context?: M
   return `${type}: ${spacing.top || 'auto'} ${spacing.right || 'auto'} ${spacing.bottom || 'auto'} ${spacing.left || 'auto'};`;
 }
 
+function RenderProperty(property: string, value: string): string {
+  if (typeof value !== 'string') { return `/* Couldn't render ${property}: ${JSON.stringify(value)} */`; }
+  let regex = /[a-z][A-Z]/g;
+  let tries = 0;
+  let mappedProp = property as string;
+  while (regex.test(mappedProp) && ++tries < 10) {
+    let index = regex.lastIndex - 1;
+    mappedProp = mappedProp.substring(0, index) + '-' + mappedProp.substring(index);
+  }
+  return `${mappedProp.toLowerCase()}: ${value};`;
+}
+
 function RenderSpacings(spacings: Spacings, context?: ModuleContext): string {
   return Object.entries(spacings).map(([key, value]) => {
     switch (key) {
@@ -44,10 +52,12 @@ function RenderSpacings(spacings: Spacings, context?: ModuleContext): string {
         return `position: ${value};`;
       case 'size':
       case 'position':
-        return Object.entries(value).map(([a, b]) => `${a}: ${b};`).join('\n');
+        return Object.entries(value as any).map(([a, b]) => `${a}: ${b};`).join('\n');
       case 'margin':
       case 'padding':
         return RenderSpacing(key, value as any, context);
+      default:
+        return RenderProperty(key, { value } as any);
     }
   }).join('\n');
 }
@@ -66,6 +76,8 @@ export function WriteCSSItem<
         return `background-${key}: ${RenderBackgroundValueForKey(key, value as Background[], context)};`
       }).join('\n')}`;
     case 'spacings': return RenderSpacings(value as Spacings);
+    case 'text':
+      return Object.entries(value as Text).map(([prop, v]) => RenderProperty(prop, v)).join('\n');
     default:
       let regex = /[a-z][A-Z]/g;
       let tries = 0;

@@ -11,7 +11,9 @@
             "color": "red"
           }
         ],
-        "font-family": "Melete"
+        "text": {
+          "fontFamily": "Melete"
+        }
       }
     },
     "fontFaces": [

@@ -8,9 +8,3 @@ export type Background = Partial<{
   repeat: string,
   size: string,
 }>;
-
-export const BackgroundAttribues = [
-  'background', 'backgroundAttachment', 'backgroundClip', 'backgroundColor', 'backgroundImage',
-  'backgroundOrigin', 'backgroundPosition', 'backgroundRepeat', 'backgroundSize'
-] as const;
-export type BackgroundAttribue = (typeof BackgroundAttribues)[number];

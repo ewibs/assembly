@@ -12,7 +12,7 @@ export const body: ComponentBody = {
       tagName: "a",
       text: "asdf",
       attributes: { href: "about.html" },
-      styles: { base: { color: "blue" } },
+      styles: { base: { text: { color: "blue" } } },
     },
     {
       tagName: "p",
@@ -20,7 +20,7 @@ export const body: ComponentBody = {
       children: [{ ref: "components/button", io: { inputs: {} } }],
       styles: {
         base: {
-          color: "red",
+          text: { color: "red" },
           spacings: {
             positionType: 'fixed',
             position: { left: '12px', right: '14px', bottom: '16px', top: '20px' },

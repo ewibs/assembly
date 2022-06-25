@@ -62,7 +62,7 @@ export const body: ComponentBody = {
       ],
       styles: {
         base: {
-          fontWeight: "bolder",
+          text: { fontWeight: "bolder" },
           background: [{ color: "yellow" }],
           display: "flex",
         },

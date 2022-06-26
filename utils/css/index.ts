@@ -32,7 +32,7 @@ function RenderBackgroundValueForKey(key: keyof Background, value: Background[],
 }
 
 function RenderSpacing(type: 'margin' | 'padding', spacing: Spacing, context?: ModuleContext): string {
-  return `${type}: ${spacing.top || 'auto'} ${spacing.right || 'auto'} ${spacing.bottom || 'auto'} ${spacing.left || 'auto'};`;
+  return `${type}: ${spacing.top || '0'} ${spacing.right || '0'} ${spacing.bottom || '0'} ${spacing.left || '0'};`;
 }
 
 function RenderSpacings(spacings: Spacings, context?: ModuleContext): string {

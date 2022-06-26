@@ -1,4 +1,4 @@
-import { IComponent, ComponentBody, IComponentMeta, TagComponentBody } from "../models/component";
+import { ComponentBody, IComponent, IComponentMeta } from '../models/component';
 
 export function MigrateMeta(meta: IComponentMeta): IComponentMeta {
   return meta;

@@ -63,7 +63,7 @@ export type AlignmentBase = Partial<{
 
 export type Alignment = AlignmentBase & (
   FlexAlignment | GridAlignment | {
-    type: 'inline' | 'block' | 'flow-root' | 'contents' | 'block flow' |
+    type?: 'inline' | 'block' | 'flow-root' | 'contents' | 'block flow' |
       'inline flow' | 'inline flow-root' | 'block flex' | 'inline flex' |
       'block grid' | 'inline grid' | 'block flow-root' | 'table' |
       'table-row' | 'list-item'

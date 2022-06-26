@@ -25,8 +25,7 @@ export const meta: IComponentMeta = {
           styles: {
             background: [{ color: "red" }],
             alignment: {
-              type: "grid",
-              gridRowStart: '1'
+              columnGap: '1'
             }
           },
         },

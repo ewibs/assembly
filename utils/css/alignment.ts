@@ -25,7 +25,7 @@ export function RenderAlignment(alignment: Alignment, context?: ModuleContext): 
   const display = alignment.inline && alignment.type !== 'inline' ? `inline-${alignment.type}` : alignment.type;
 
   return `
-    display: ${display};
+    ${RenderPropertyValue('display', display)};
     ${(() => {
       switch (alignment.type) {
         case 'flex': return RenderFlexAlignment(alignment).trim();
@@ -35,5 +35,5 @@ export function RenderAlignment(alignment: Alignment, context?: ModuleContext): 
     })()}
     ${RenderPropertyValue('rowGap', alignment.rowGap).trim()}
     ${RenderPropertyValue('columnGap', alignment.columnGap).trim()}
-  `.trim();
+  `.trim().replace('\n', '');
 }

@@ -30,7 +30,7 @@ export const meta: IComponentMeta = {
           },
         },
       ],
-      base: { background: [{ color: "green" }] },
+      base: { background: [{ color: "green" }], border: { radii: { "top-left": '1rem' } } },
     },
   },
 };

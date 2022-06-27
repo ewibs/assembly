@@ -55,7 +55,7 @@ export type ComponentBodyGeneric<TagName> = TagName extends NoWrapHTMLElementTag
   // TODO: this should be more controlled, for example if js is there it should require an identifier
 ) : never;
 
-export type WrapTagComponentBody = ComponentBodyGeneric<NoWrapHTMLElementTag>;
+export type WrapTagComponentBody = ComponentBodyGeneric<WrapHTMLElementTag>;
 export type NoWrapTagComponentBody = ComponentBodyGeneric<NoWrapHTMLElementTag>;
 export type TagComponentBody = WrapTagComponentBody | NoWrapTagComponentBody;
 

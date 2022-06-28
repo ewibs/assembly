@@ -50,7 +50,7 @@ export function BuildFontFace(face: IFontFace, context: ModuleContext) {
     font-family: ${face.family};
     src: ${sources.map(v => {
     const format = v.format || FormatFromFile(v.url)
-    return `url(${context?.resolve(v.url)}) ${format ? `format("${format}")` : ''}`
+    return `url(${encodeURI(context?.resolve(v.url))}) ${format ? `format("${format}")` : ''}`
   }).join(', \n')};
     ${descriptors!.map(([descriptor, value]) => `${descriptor}: ${value}`).join(';\n')}
   }

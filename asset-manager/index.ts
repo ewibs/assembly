@@ -1,9 +1,10 @@
 import fs from 'fs';
-import { GlobSync, IGlobBase } from 'glob';
+import { GlobSync } from 'glob';
 import globWatch from 'glob-watcher';
 import path from 'path';
-import { Assembly } from "assembly";
 import { map, startWith, Subject } from 'rxjs';
+
+import { Assembly } from '../assembly';
 
 export interface IAssetTree {
   [key: string]: string | IAssetTree;

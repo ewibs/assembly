@@ -47,7 +47,7 @@ export class Bundle implements IBundleContext {
           <html>
             <head>
               <title>${meta.url}</title>
-              <base href="${assembly.settings.base ? `/${assembly.settings.base}` : path.relative(path.dirname(meta.url), '') || './'}">
+              <base href="${assembly.settings.base ? `/${assembly.settings.base}` : path.relative(path.dirname(meta.url), '') || '.'}/">
               <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
   
               <link rel="stylesheet" href="assets/styles.css">

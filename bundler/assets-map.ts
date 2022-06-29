@@ -31,7 +31,7 @@ export class AssetsMap {
       this.assets.set(file, {
         abs,
         file: fs.readFileSync(abs),
-        rel: `assets/${file.startsWith('/') ? file.slice(1) : file}`
+        rel: `${file.startsWith('/') ? file.slice(1) : file}`
       });
     }
     return this.assets.get(file)!;

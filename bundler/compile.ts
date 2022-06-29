@@ -1,5 +1,3 @@
-import { IORefValueMap } from '../models/io';
-
 import { AssemblyMode, IAssembly } from '../models/assembly';
 import {
   ComponentBody,
@@ -12,9 +10,10 @@ import {
   TextComponentBody,
   UnwrappableHTMLTags,
 } from '../models/component';
+import { IORefValueMap } from '../models/io';
+import { AssetsMap } from './assets-map';
 import { JSModuleMap } from './js-module-map';
 import { CompilerStyleSheet } from './stylesheet';
-import { AssetsMap } from './assets-map';
 
 export interface IBundleContext {
   mode: AssemblyMode;

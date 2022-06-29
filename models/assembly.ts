@@ -14,6 +14,7 @@ export interface IAssemblySettings {
   root: string;
   dist: string;
   assets: string;
+  base?: string;
   globalStyle: {
     normalize: boolean;
     styles: Styles;

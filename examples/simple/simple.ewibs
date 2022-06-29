@@ -2,6 +2,7 @@
   "root": "src",
   "dist": "dist",
   "assets": "assets",
+  "base": "website",
   "globalStyle": {
     "normalize": false,
     "styles": {

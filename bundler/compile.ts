@@ -32,7 +32,7 @@ export function NormalizeAttributeValue(
   context: IBundleContext,
 ): Primitive {
   if (attribute) {
-    return context.assets.resolve(value as string)
+    return context.assets.resolve(value as string, '')
   }
   return value;
 }

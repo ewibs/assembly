@@ -22,7 +22,7 @@ export class AssetsMap {
     return path.resolve(this.assetsPath, file.startsWith('/') ? file.slice(1) : file);
   }
 
-  private findAsset(file: string): Asset {
+  private findAsset(file: string, fromPath: string = 'assets/'): Asset {
     if (!this.assets.has(file)) {
       const abs = this.resolveAssetPath(file)
       if (!fs.existsSync(this.resolveAssetPath(file))) {
@@ -31,16 +31,16 @@ export class AssetsMap {
       this.assets.set(file, {
         abs,
         file: fs.readFileSync(abs),
-        rel: `${file.startsWith('/') ? file.slice(1) : file}`
+        rel: `${path.join(path.relative(fromPath, 'assets'), file.startsWith('/') ? file.slice(1) : file)}`
       });
     }
     return this.assets.get(file)!;
   }
 
-  resolve(file: string): string {
+  resolve(file: string, fromPath: string = 'assets/'): string {
     const [source, path] = file.split(':/');
     switch (source) {
-      case 'assets': return this.findAsset(path).rel;
+      case 'assets': return this.findAsset(path, fromPath).rel;
       default: return file;
     }
   }

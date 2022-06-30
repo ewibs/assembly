@@ -12,7 +12,7 @@ export interface IComponentMeta {
   page?: PageMeta;
 }
 
-export const UnwrappableHTMLTags = ['input', 'hr', 'br'] as const;
+export const UnwrappableHTMLTags = ['input', 'hr', 'br', 'img'] as const;
 export type NoWrapHTMLElementTag = (typeof UnwrappableHTMLTags)[number];
 export type WrapHTMLElementTag = Exclude<keyof HTMLElementTagNameMap, NoWrapHTMLElementTag>;
 

@@ -26,6 +26,17 @@ export interface IBundleContext {
 
 type CompilerResult = string;
 
+export function NormalizeAttributeValue(
+  attribute: string,
+  value: Primitive,
+  context: IBundleContext,
+): Primitive {
+  if (attribute) {
+    return context.assets.resolve(value as string)
+  }
+  return value;
+}
+
 export function CompileComponentBody(
   assembly: IAssembly,
   context: IBundleContext,
@@ -82,7 +93,7 @@ export function CompileComponentBody(
 
     const attributesRendered = Object.entries(attributes)
       .filter(([_, val]) => !!val)
-      .map(([attr, val]) => `${attr}="${val}"`)
+      .map(([attr, val]) => `${attr}="${NormalizeAttributeValue(attr, val, context)}"`)
       .join(" ");
     const tag = (body as TagComponentBody)?.tagName!;
 

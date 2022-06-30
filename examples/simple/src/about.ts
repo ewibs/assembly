@@ -46,6 +46,7 @@ export const body: ComponentBody = {
       children: [
         { ref: "components/button", io: { inputs: {} } },
         { text: "Hello world" },
+        { tagName: "img", attributes: { src: 'assets://subdir/logo.png' } },
         { tagName: "blockquote", text: "Pipi" },
       ],
     },

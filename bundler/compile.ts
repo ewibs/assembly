@@ -80,7 +80,7 @@ export function CompileComponentBody(
         context,
         page,
         (child as TagComponentBody).tagName ? `${selector} >
-          ${(child as TagComponentBody).tagName}:nth-of-type(${all.filter(v => (child as TagComponentBody).tagName === ((v as TagComponentBody).tagName)).indexOf(child) + 1})` : selector,
+          ${(child as TagComponentBody).tagName}:nth-child(${all.filter(v => (child as TagComponentBody).tagName === ((v as TagComponentBody).tagName)).indexOf(child) + 1})` : selector,
         child
       );
     }).forEach(result => html += `\n${result}`);

@@ -74,13 +74,14 @@ export function CompileComponentBody(
           (child as RefComponentBody).io
         );
       }
+      const absIndex = all.filter(v => !!(child as TagComponentBody).tagName).indexOf(child) + 1;
       // TODO: if an element has no tag then the nth won't work
       return CompileComponentBody(
         assembly,
         context,
         page,
         (child as TagComponentBody).tagName ? `${selector} >
-          ${(child as TagComponentBody).tagName}:nth-child(${all.filter(v => (child as TagComponentBody).tagName === ((v as TagComponentBody).tagName)).indexOf(child) + 1})` : selector,
+          ${(child as TagComponentBody).tagName}:nth-child(${absIndex})` : selector,
         child
       );
     }).forEach(result => html += `\n${result}`);
